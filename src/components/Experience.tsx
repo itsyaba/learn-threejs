@@ -19,8 +19,18 @@ export function Experience() {
     <>
       <color attach="background" args={['#151515']} />
       <Environment preset="apartment" />
-      <ambientLight intensity={0.7} />
-      <directionalLight position={[4, 6, 3]} intensity={1.4} />
+      <ambientLight intensity={0.3} />
+      <directionalLight
+        castShadow
+        position={[5, 8, 5]}
+        intensity={1.2}
+        shadow-mapSize={[2048, 2048]}
+        shadow-camera-left={-5}
+        shadow-camera-right={5}
+        shadow-camera-top={5}
+        shadow-camera-bottom={-5}
+      />
+      <pointLight position={[0, 3, 0]} intensity={0.8} color="#fff5e0" />
       <CameraRig controlsRef={controlsRef} />
       <Room />
       <Desk />

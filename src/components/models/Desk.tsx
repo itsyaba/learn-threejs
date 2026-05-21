@@ -2,10 +2,10 @@ import { InteractiveProject } from './InteractiveProject';
 
 export function Desk() {
   return (
-    <InteractiveProject projectId="workspace">
+    <InteractiveProject projectId="portfolio-v2">
       {(hovered) => (
         <group position={[0, 0.62, -1.25]}>
-          <mesh position={[0, 0, 0]}>
+          <mesh castShadow receiveShadow position={[0, 0, 0]}>
             <boxGeometry args={[2.4, 0.16, 1.05]} />
             <meshStandardMaterial
               color="#83664b"
@@ -14,19 +14,19 @@ export function Desk() {
               roughness={0.82}
             />
           </mesh>
-          <mesh position={[-1.02, -0.38, -0.38]}>
+          <mesh castShadow receiveShadow position={[-1.02, -0.38, -0.38]}>
             <boxGeometry args={[0.14, 0.76, 0.14]} />
             <meshStandardMaterial color="#5a4433" roughness={0.8} />
           </mesh>
-          <mesh position={[1.02, -0.38, -0.38]}>
+          <mesh castShadow receiveShadow position={[1.02, -0.38, -0.38]}>
             <boxGeometry args={[0.14, 0.76, 0.14]} />
             <meshStandardMaterial color="#5a4433" roughness={0.8} />
           </mesh>
-          <mesh position={[-1.02, -0.38, 0.38]}>
+          <mesh castShadow receiveShadow position={[-1.02, -0.38, 0.38]}>
             <boxGeometry args={[0.14, 0.76, 0.14]} />
             <meshStandardMaterial color="#5a4433" roughness={0.8} />
           </mesh>
-          <mesh position={[1.02, -0.38, 0.38]}>
+          <mesh castShadow receiveShadow position={[1.02, -0.38, 0.38]}>
             <boxGeometry args={[0.14, 0.76, 0.14]} />
             <meshStandardMaterial color="#5a4433" roughness={0.8} />
           </mesh>

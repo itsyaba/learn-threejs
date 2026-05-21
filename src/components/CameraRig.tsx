@@ -1,6 +1,6 @@
 import { useFrame } from '@react-three/fiber';
 import type { RefObject } from 'react';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Vector3 } from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import {
@@ -19,12 +19,21 @@ const cameraTarget = new Vector3();
 
 export function CameraRig({ controlsRef }: CameraRigProps) {
   const activeProject = usePortfolioStore((state) => state.activeProject);
+  const isTransitioning = useRef(false);
   const projectById = useMemo(
     () => new Map(projects.map((project) => [project.id, project])),
     [],
   );
 
+  useEffect(() => {
+    isTransitioning.current = true;
+  }, [activeProject]);
+
   useFrame(({ camera }, delta) => {
+    if (!isTransitioning.current) {
+      return;
+    }
+
     const project = activeProject ? projectById.get(activeProject) : null;
     const nextPosition = project?.cameraPosition ?? defaultCameraPosition;
     const nextTarget = project?.cameraTarget ?? defaultCameraTarget;
@@ -36,6 +45,18 @@ export function CameraRig({ controlsRef }: CameraRigProps) {
     camera.position.lerp(cameraPosition, smoothing);
     controlsRef.current?.target.lerp(cameraTarget, smoothing);
     controlsRef.current?.update();
+
+    const cameraSettled = camera.position.distanceTo(cameraPosition) < 0.015;
+    const targetSettled =
+      !controlsRef.current ||
+      controlsRef.current.target.distanceTo(cameraTarget) < 0.015;
+
+    if (cameraSettled && targetSettled) {
+      camera.position.copy(cameraPosition);
+      controlsRef.current?.target.copy(cameraTarget);
+      controlsRef.current?.update();
+      isTransitioning.current = false;
+    }
   });
 
   return null;

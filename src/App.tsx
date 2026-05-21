@@ -12,6 +12,7 @@ export default function App() {
   return (
     <main className="app">
       <Canvas
+        shadows
         camera={{ position: defaultCameraPosition, fov: 50 }}
         onPointerMissed={() => setActiveProject(null)}
       >
